@@ -27,7 +27,6 @@ class ProductItem extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: Colors.white,
               child: IconButton(
-                // alignment: Alignment.topRight,
                 onPressed: () {},
                 icon: const Icon(Icons.favorite),
                 // color: Theme.of(context).colorScheme.secondary,
@@ -37,13 +36,11 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         footer: GridTileBar(
-          title: Text("$title\n"
-              "₹ $price",
+          title: Text(
+            "$title\n"
+            "₹ $price",
             // textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 15.0,
-              fontWeight: FontWeight.bold
-            ),
+            style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.black54,
           trailing: IconButton(
@@ -53,9 +50,12 @@ class ProductItem extends StatelessWidget {
             color: Colors.greenAccent,
           ),
         ),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
+        child: GestureDetector(
+          onTap: (){},
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
