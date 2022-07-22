@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_provider_demo/providers/product.dart';
 import 'package:shop_provider_demo/screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
@@ -14,10 +16,12 @@ class ProductItem extends StatelessWidget {
   //     required this.title,
   //     required this.price})
   //     : super(key: key);
-  const ProductItem({Key? key}): super(key: key);
+  const ProductItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
+
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(8.0)),
       child: GridTile(
@@ -29,18 +33,20 @@ class ProductItem extends StatelessWidget {
             child: CircleAvatar(
               backgroundColor: Colors.white,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  product.changeIsFavourite();
+                },
                 icon: const Icon(Icons.favorite),
                 // color: Theme.of(context).colorScheme.secondary,
-                color: Colors.grey.shade400,
+                color: !product.isFavourite ? Colors.grey.shade400 : Colors.red,
               ),
             ),
           ),
         ),
         footer: GridTileBar(
           title: Text(
-            "$title\n"
-            "₹ $price",
+            "${product.title}\n"
+            "₹ ${product.price}",
             // textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
           ),
@@ -64,10 +70,10 @@ class ProductItem extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, ProductDetailScreen.routeName,
-                arguments: id);
+                arguments: product.id);
           },
           child: Image.network(
-            imageUrl,
+            product.imageUrl,
             fit: BoxFit.cover,
           ),
         ),
