@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:shop_provider_demo/providers/product.dart';
 import 'package:shop_provider_demo/screens/product_detail_screen.dart';
 
+//How one product in a grid should look like
 class ProductItem extends StatelessWidget {
   // final String id;
   // final String title;
   // final double price;
   // final String imageUrl;
-
   // const ProductItem(
   //     {Key? key,
   //     required this.imageUrl,
@@ -20,66 +20,62 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context);
+    final product = Provider.of<Product>(context, listen: false);
+    //using Provider.of rebuilds the whole widget. If we just want a part of ui
+    // to be rebuilt, we can wrap it around Consumer widget, otherwise same
+    //Consumer widget always listens to changes
 
     return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-      child: GridTile(
-        header: Align(
-          alignment: Alignment.topRight,
-          child: Material(
-            elevation: 5.0,
-            borderRadius: BorderRadius.circular(20),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: IconButton(
-                onPressed: () {
-                  product.changeIsFavourite();
-                },
-                icon: const Icon(Icons.favorite),
+          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+          child: GridTile(
+            header: Align(
+              alignment: Alignment.topRight,
+              child: SizedBox(
+                width: 45.0,
+                height: 45.0,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  onPressed: () {
+                    product.changeIsFavourite();
+                  },
+                  child: Consumer<Product>(
+                    builder: (context, product, child) {
+                      return Icon(Icons.favorite, color: !product.isFavourite ?
+                      Colors.grey.shade400 : Colors.red,);
+                    }
+                    // child:
+                  ),
+                ),
+              ),
+            ),
+            footer: GridTileBar(
+              title: Text(
+                "${product.title}\n"
+                    "₹ ${product.price}",
+                // textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: Colors.black54,
+              trailing: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.shopping_cart),
                 // color: Theme.of(context).colorScheme.secondary,
-                color: !product.isFavourite ? Colors.grey.shade400 : Colors.red,
+                color: Colors.greenAccent,
+              ),
+            ),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, ProductDetailScreen.routeName,
+                    arguments: product.id);
+              },
+              child: Image.network(
+                product.imageUrl,
+                fit: BoxFit.cover,
               ),
             ),
           ),
-        ),
-        footer: GridTileBar(
-          title: Text(
-            "${product.title}\n"
-            "₹ ${product.price}",
-            // textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-          ),
-          // leading: PhysicalModel(
-          //   shape: BoxShape.circle,
-          //   color: Colors.white,
-          //   elevation: 4,
-          //   child: IconButton(
-          //     icon: Icon(Icons.favorite, color: Colors.grey.shade400,),
-          //     onPressed: () {print("hi");},
-          //   ),
-          // ),
-          backgroundColor: Colors.black54,
-          trailing: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.shopping_cart),
-            // color: Theme.of(context).colorScheme.secondary,
-            color: Colors.greenAccent,
-          ),
-        ),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, ProductDetailScreen.routeName,
-                arguments: product.id);
-          },
-          child: Image.network(
-            product.imageUrl,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
-    );
-  }
+        );
+      }
 }
 
 // Row(
