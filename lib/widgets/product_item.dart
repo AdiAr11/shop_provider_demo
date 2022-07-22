@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:shop_provider_demo/screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final double price;
-  final String imageUrl;
+  // final String id;
+  // final String title;
+  // final double price;
+  // final String imageUrl;
 
-  const ProductItem(
-      {Key? key,
-      required this.imageUrl,
-      required this.id,
-      required this.title,
-      required this.price})
-      : super(key: key);
+  // const ProductItem(
+  //     {Key? key,
+  //     required this.imageUrl,
+  //     required this.id,
+  //     required this.title,
+  //     required this.price})
+  //     : super(key: key);
+  const ProductItem({Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,15 @@ class ProductItem extends StatelessWidget {
             // textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
           ),
+          // leading: PhysicalModel(
+          //   shape: BoxShape.circle,
+          //   color: Colors.white,
+          //   elevation: 4,
+          //   child: IconButton(
+          //     icon: Icon(Icons.favorite, color: Colors.grey.shade400,),
+          //     onPressed: () {print("hi");},
+          //   ),
+          // ),
           backgroundColor: Colors.black54,
           trailing: IconButton(
             onPressed: () {},
@@ -51,7 +62,10 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         child: GestureDetector(
-          onTap: (){},
+          onTap: () {
+            Navigator.pushNamed(context, ProductDetailScreen.routeName,
+                arguments: id);
+          },
           child: Image.network(
             imageUrl,
             fit: BoxFit.cover,

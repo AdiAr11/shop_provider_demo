@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_provider_demo/providers/products_provider.dart';
+import 'package:shop_provider_demo/screens/product_detail_screen.dart';
 import 'package:shop_provider_demo/screens/products_overview_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
               .textTheme)
       ),
       home: const ProductsOverviewScreen(),
+      routes: {
+        ProductDetailScreen.routeName: (context) => const ProductDetailScreen()
+      },
     );
   }
 }
