@@ -57,7 +57,8 @@ class Products with ChangeNotifier {
   }
 //if we were to return _items, it would return pointer of this because of which
 // we could access and edit  it from outside this class, but we don't want that.
-//[..._items] return a copy
+//[..._items] creates a new list which contains list _items;
+  // [...list] is spread operator
 
   List<Product> get onlyFavourites{
     return _items.where((element) => element.isFavourite).toList();

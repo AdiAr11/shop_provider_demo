@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_provider_demo/providers/cart.dart';
 import 'package:shop_provider_demo/providers/products_provider.dart';
 import 'package:shop_provider_demo/screens/product_detail_screen.dart';
 import 'package:shop_provider_demo/screens/products_overview_screen.dart';
@@ -10,6 +11,7 @@ void main() {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => Products()),
+          ChangeNotifierProvider(create: (context) => Cart()),
         ],
         child: const MyApp(),
       )

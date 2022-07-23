@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_provider_demo/providers/cart.dart';
 import 'package:shop_provider_demo/providers/product.dart';
 import 'package:shop_provider_demo/screens/product_detail_screen.dart';
 
@@ -21,6 +22,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
+    final cart = Provider.of<Cart>(context, listen: false);
     //using Provider.of rebuilds the whole widget. If we just want a part of ui
     // to be rebuilt, we can wrap it around Consumer widget, otherwise same
     //Consumer widget always listens to changes
@@ -52,7 +54,9 @@ class ProductItem extends StatelessWidget {
               ),
               backgroundColor: Colors.black54,
               trailing: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  cart.addItem(product.id, product.title, product.price);
+                },
                 icon: const Icon(Icons.shopping_cart),
                 // color: Theme.of(context).colorScheme.secondary,
                 color: Colors.greenAccent,
