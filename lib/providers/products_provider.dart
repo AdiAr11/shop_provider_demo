@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  List<Product> _items = [
+
+  final List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -51,9 +52,15 @@ class Products with ChangeNotifier {
     return _items.firstWhere((element) => element.id == id);
   }
 
-  List<Product> get items => [..._items];
+  List<Product> get items {
+    return [..._items];
+  }
 //if we were to return _items, it would return pointer of this because of which
 // we could access and edit  it from outside this class, but we don't want that.
 //[..._items] return a copy
+
+  List<Product> get onlyFavourites{
+    return _items.where((element) => element.isFavourite).toList();
+  }
 
 }

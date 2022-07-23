@@ -20,7 +20,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context, listen: false);
+    final product = Provider.of<Product>(context);
     //using Provider.of rebuilds the whole widget. If we just want a part of ui
     // to be rebuilt, we can wrap it around Consumer widget, otherwise same
     //Consumer widget always listens to changes
@@ -34,18 +34,13 @@ class ProductItem extends StatelessWidget {
                 width: 45.0,
                 height: 45.0,
                 child: FloatingActionButton(
-                  backgroundColor: Colors.white,
-                  onPressed: () {
-                    product.changeIsFavourite();
-                  },
-                  child: Consumer<Product>(
-                    builder: (context, product, child) {
-                      return Icon(Icons.favorite, color: !product.isFavourite ?
-                      Colors.grey.shade400 : Colors.red,);
-                    }
-                    // child:
-                  ),
-                ),
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      product.changeIsFavourite();
+                    },
+                    child: Icon(Icons.favorite, color: !product.isFavourite ?
+                    Colors.grey.shade400 : Colors.red,)
+                )
               ),
             ),
             footer: GridTileBar(
