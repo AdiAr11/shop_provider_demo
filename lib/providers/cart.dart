@@ -44,4 +44,12 @@ class Cart with ChangeNotifier {
     return _cartItem.length;
   }
 
+  double totalPrice(){
+    double total = 0;
+    for(var item in _cartItem.values){
+      total += item.price * item.quantity;
+    }
+    return total;
+  }
+
 }
