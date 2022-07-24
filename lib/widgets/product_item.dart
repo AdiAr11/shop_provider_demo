@@ -28,53 +28,56 @@ class ProductItem extends StatelessWidget {
     //Consumer widget always listens to changes
 
     return ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-          child: GridTile(
-            header: Align(
-              alignment: Alignment.topRight,
-              child: SizedBox(
-                width: 45.0,
-                height: 45.0,
-                child: FloatingActionButton(
-                    backgroundColor: Colors.white,
-                    onPressed: () {
-                      product.changeIsFavourite();
-                    },
-                    child: Icon(Icons.favorite, color: !product.isFavourite ?
-                    Colors.grey.shade400 : Colors.red,)
-                )
-              ),
-            ),
-            footer: GridTileBar(
-              title: Text(
-                "${product.title}\n"
-                    "₹ ${product.price}",
-                // textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-              ),
-              backgroundColor: Colors.black54,
-              trailing: IconButton(
-                onPressed: () {
-                  cart.addItem(product.id, product.title, product.price);
-                },
-                icon: const Icon(Icons.shopping_cart),
-                // color: Theme.of(context).colorScheme.secondary,
-                color: Colors.greenAccent,
-              ),
-            ),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, ProductDetailScreen.routeName,
-                    arguments: product.id);
-              },
-              child: Image.network(
-                product.imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
+      borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+      child: GridTile(
+        header: Align(
+          alignment: Alignment.topRight,
+          child: SizedBox(
+              width: 45.0,
+              height: 45.0,
+              child: FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  onPressed: () {
+                    product.changeIsFavourite();
+                  },
+                  child: Icon(
+                    Icons.favorite,
+                    color: !product.isFavourite
+                        ? Colors.grey.shade400
+                        : Colors.red,
+                  ))),
+        ),
+        footer: GridTileBar(
+          title: Text(
+            "${product.title}\n"
+            "₹ ${product.price}",
+            // textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
           ),
-        );
-      }
+          backgroundColor: Colors.black54,
+          trailing: IconButton(
+            onPressed: () {
+              cart.addItem(
+                  product.id, product.title, product.price, product.imageUrl);
+            },
+            icon: const Icon(Icons.shopping_cart),
+            // color: Theme.of(context).colorScheme.secondary,
+            color: Colors.greenAccent,
+          ),
+        ),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, ProductDetailScreen.routeName,
+                arguments: product.id);
+          },
+          child: Image.network(
+            product.imageUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 // Row(

@@ -1,33 +1,22 @@
 import 'package:flutter/material.dart';
 
-class CartItem {
-  final String id;
-  final String title;
-  int quantity;
-  final double price;
-
-  CartItem(
-      {required this.id,
-      required this.title,
-      required this.quantity,
-      required this.price});
-}
+import '../models/cart_item.dart';
 
 class Cart with ChangeNotifier {
   final Map<String, CartItem> _cartItem = {};
 
   Map<String, CartItem> get cartItem => {..._cartItem};
 
-  void addItem(String productId, String title, double price) {
+  void addItem(String productId, String title, double price, String imageUrl) {
     if (_cartItem.containsKey(productId)) {
       _cartItem.update(
           productId,
           (value) => CartItem(
+              imageUrl: value.imageUrl,
               id: value.id,
               title: value.title,
               quantity: value.quantity + 1,
               price: value.price));
-      
     } else {
       _cartItem.putIfAbsent(
           productId,
@@ -35,21 +24,69 @@ class Cart with ChangeNotifier {
               id: DateTime.now().toString(),
               title: title,
               quantity: 1,
+              imageUrl: imageUrl,
               price: price));
     }
     notifyListeners();
   }
 
-  int numberOfItemsInCart(){
+  int numberOfItemsInCart() {
     return _cartItem.length;
   }
 
-  double totalPrice(){
+  double totalPrice() {
     double total = 0;
-    for(var item in _cartItem.values){
+    for (var item in _cartItem.values) {
       total += item.price * item.quantity;
     }
     return total;
   }
 
+  void incrementQuantity(String productId) {
+    _cartItem.update(
+        productId,
+        (value) => CartItem(
+            imageUrl: value.imageUrl,
+            id: value.id,
+            title: value.title,
+            quantity: value.quantity + 1,
+            price: value.price));
+    // _cartItem[productId] = _cartItem[productId].quantity++;
+    notifyListeners();
+  }
+
+  void decrementQuantity(String productId, BuildContext context) {
+    if (_cartItem[productId]?.quantity == 1) {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          content: const Text(
+              'Are you sure you want to remove the product from Cart?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                _cartItem.remove(productId);
+                Navigator.pop(context, 'OK');
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      _cartItem.update(
+          productId,
+          (value) => CartItem(
+              imageUrl: value.imageUrl,
+              id: value.id,
+              title: value.title,
+              quantity: value.quantity - 1,
+              price: value.price));
+    }
+    notifyListeners();
+  }
 }
