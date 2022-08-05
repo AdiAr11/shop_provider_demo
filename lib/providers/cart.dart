@@ -55,9 +55,14 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeItem(String productId){
+    _cartItem.remove(productId);
+    notifyListeners();
+  }
+
   void decrementQuantity(String productId, BuildContext context) {
     if (_cartItem[productId]?.quantity == 1) {
-      showDialog<String>(
+      showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
           content: const Text(

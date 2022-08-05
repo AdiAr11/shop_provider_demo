@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_provider_demo/providers/cart.dart';
 import 'package:shop_provider_demo/providers/product.dart';
 import 'package:shop_provider_demo/screens/product_detail_screen.dart';
 
 //How one product in a grid should look like
-class ProductItem extends StatelessWidget {
+class ProductItem extends StatefulWidget {
   // final String id;
   // final String title;
   // final double price;
@@ -18,6 +19,21 @@ class ProductItem extends StatelessWidget {
   //     required this.price})
   //     : super(key: key);
   const ProductItem({Key? key}) : super(key: key);
+
+  @override
+  State<ProductItem> createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
+
+  late FToast fToast;
+
+  @override
+  void initState() {
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +52,7 @@ class ProductItem extends StatelessWidget {
               width: 45.0,
               height: 45.0,
               child: FloatingActionButton(
+                heroTag: "btn${product.id}",
                   backgroundColor: Colors.white,
                   onPressed: () {
                     product.changeIsFavourite();
@@ -59,6 +76,7 @@ class ProductItem extends StatelessWidget {
             onPressed: () {
               cart.addItem(
                   product.id, product.title, product.price, product.imageUrl);
+              _showToast();
             },
             icon: const Icon(Icons.shopping_cart),
             // color: Theme.of(context).colorScheme.secondary,
@@ -76,6 +94,33 @@ class ProductItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _showToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.greenAccent,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Icon(Icons.check),
+          SizedBox(
+            width: 12.0,
+          ),
+          Text("Item added to cart"),
+        ],
+      ),
+    );
+
+
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: const Duration(seconds: 2),
     );
   }
 }
