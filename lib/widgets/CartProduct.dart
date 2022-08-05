@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_provider_demo/providers/cart.dart';
 
+//no usages, for learning only
 class CartProduct extends StatelessWidget {
   const CartProduct({Key? key}) : super(key: key);
 

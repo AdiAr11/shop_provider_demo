@@ -88,9 +88,12 @@ class _ProductItemState extends State<ProductItem> {
             Navigator.pushNamed(context, ProductDetailScreen.routeName,
                 arguments: product.id);
           },
-          child: Image.network(
-            product.imageUrl,
-            fit: BoxFit.cover,
+          child: Hero(
+            tag: "heroTag${product.id}",
+            child: Image.network(
+              product.imageUrl,
+              fit: BoxFit.contain,
+            ),
           ),
         ),
       ),
