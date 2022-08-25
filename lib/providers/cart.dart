@@ -75,6 +75,7 @@ class Cart with ChangeNotifier {
             TextButton(
               onPressed: () {
                 _cartItem.remove(productId);
+                notifyListeners();
                 Navigator.pop(context, 'OK');
               },
               child: const Text('OK'),
