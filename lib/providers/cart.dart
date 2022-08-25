@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shop_provider_demo/models/cart_item.dart';
 
-import '../models/cart_item.dart';
 
 class Cart with ChangeNotifier {
-  final Map<String, CartItem> _cartItem = {};
+  Map<String, CartItem> _cartItem = {};
 
   Map<String, CartItem> get cartItem => {..._cartItem};
 
@@ -92,6 +92,10 @@ class Cart with ChangeNotifier {
               quantity: value.quantity - 1,
               price: value.price));
     }
+    notifyListeners();
+  }
+  void clearCart(){
+    _cartItem = {};
     notifyListeners();
   }
 }

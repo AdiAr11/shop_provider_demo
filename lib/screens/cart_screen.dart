@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../models/cart_item.dart';
-import '../providers/cart.dart';
+import 'package:shop_provider_demo/models/cart_item.dart';
+import 'package:shop_provider_demo/providers/cart.dart';
+import 'package:shop_provider_demo/providers/orders.dart';
 
 class ChatScreen extends StatelessWidget {
   static const routeName = "/chat_screen";
@@ -36,7 +36,13 @@ class ChatScreen extends StatelessWidget {
                   Chip(
                       label:
                           Text('\$ ${cart.totalPrice().toStringAsFixed(2)}')),
-                  TextButton(onPressed: () {}, child: const Text("Order Now"))
+                  TextButton(
+                      onPressed: () {
+                        Provider.of<Orders>(context, listen: false)
+                            .addOrder(cartItems, cart.totalPrice());
+                        cart.clearCart();
+                      },
+                      child: const Text("Order Now"))
                 ],
               ),
             ),
@@ -58,7 +64,9 @@ class ChatScreen extends StatelessWidget {
                       ),
                     ),
                     direction: DismissDirection.endToStart,
-                    onDismissed: (direction){cart.removeItem(cartItemsKeys[i]);},
+                    onDismissed: (direction) {
+                      cart.removeItem(cartItemsKeys[i]);
+                    },
                     child: Card(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 5.0, vertical: 5.0),
@@ -99,7 +107,10 @@ class ChatScreen extends StatelessWidget {
                                 child: const SizedBox(
                                     width: 25,
                                     height: 25,
-                                    child: Icon(Icons.remove, color: Colors.white,)),
+                                    child: Icon(
+                                      Icons.remove,
+                                      color: Colors.white,
+                                    )),
                               ),
                             ),
                           ),
@@ -123,7 +134,10 @@ class ChatScreen extends StatelessWidget {
                                 child: const SizedBox(
                                     width: 25,
                                     height: 25,
-                                    child: Icon(Icons.add, color: Colors.white,)),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                    )),
                               ),
                             ),
                           ),
@@ -137,5 +151,4 @@ class ChatScreen extends StatelessWidget {
       ),
     );
   }
-
 }

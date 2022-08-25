@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../providers/products_provider.dart';
+import 'package:shop_provider_demo/providers/products_provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({Key? key}) : super(key: key);
@@ -31,15 +30,15 @@ class ProductDetailScreen extends StatelessWidget {
                     // fit: BoxFit.,
                   ),
                 )),
-            SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
             Text("\$${productData.price}", style: const TextStyle(
               color: Colors.grey,
               fontSize: 25.0
             ),),
-            SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
             Text(
               productData.description,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20.0
               ),
               softWrap: true,
