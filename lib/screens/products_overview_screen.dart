@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_provider_demo/screens/cart_screen.dart';
+import 'package:shop_provider_demo/widgets/app_drawer.dart';
 import 'package:shop_provider_demo/widgets/badge.dart';
 import '../providers/cart.dart';
 import '../widgets/products_grid.dart';
@@ -61,6 +62,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           )
         ],
       ),
+      drawer: const AppDrawer(),
       body: SafeArea(
         child: ProductsGrid(
           showOnlyFavourites: _showOnlyFavourites,
